@@ -6,7 +6,8 @@ import type { RootState } from '../store';
 
 import { Button, Container, TextField, Paper, Grid, 
         Table, TableRow, TableCell, TableBody, 
-        TableContainer, TableHead} from '@mui/material';
+        TableContainer, TableHead,
+        Tooltip} from '@mui/material';
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
@@ -229,13 +230,15 @@ function Dashboard() {
                     </Grid>
 
                     {/* Botón para insertar */}
-                    <Button
-                        variant="contained"
-                        sx={{ mt: 2, px:3, py: 1, fontWeight: "bold", alignSelf: "flex-start" }}
-                        onClick={insertData}
-                    >
-                        INSERTAR REGISTRO
-                    </Button>
+                    <Tooltip title="Insertar nuevo registro" placement="top" arrow>
+                        <Button
+                            variant="contained"
+                            sx={{ mt: 2, px:3, py: 1, fontWeight: "bold", alignSelf: "flex-start" }}
+                            onClick={insertData}
+                        >
+                            INSERTAR REGISTRO
+                        </Button>
+                    </Tooltip>
                 </Paper>
             </Container>
 
@@ -268,12 +271,13 @@ function Dashboard() {
                                     <TableRow key={row.id}>
                                         
                                         {/* Botón icónico para eliminar por filas llamando a la función deleteData */}
-                                        {userData.userRol === 'admin' &&(
-
+                                        {userData.userRol === 'admin' && (
                                             <TableCell align="center">
-                                                <Button onClick={() => deleteData(row)}>
-                                                    <DeleteForeverIcon color="primary" />
-                                                </Button>
+                                                <Tooltip title="Eliminar registro" placement="left" arrow>
+                                                    <Button onClick={() => deleteData(row)}>
+                                                        <DeleteForeverIcon color="primary" />
+                                                    </Button>
+                                                </Tooltip>
                                             </TableCell>
                                         )}
                                         
