@@ -7,7 +7,10 @@ function Reports() {
 
     const [getInformeColeccion, setInformeColeccion] = useState(false);
 
+    const [key, setKey] = useState(0);
+
     const handleMostrarInformeColeccion = () => {
+        setKey(prev => prev + 1); 
         setInformeColeccion(true);
     };
 
@@ -35,7 +38,7 @@ return (
         </Container>
 
         <Box sx={{ mt: 4 }}>
-            {getInformeColeccion && <InformeColeccion/>}
+            {getInformeColeccion && <InformeColeccion key={key} />}
         </Box>
 
     </>

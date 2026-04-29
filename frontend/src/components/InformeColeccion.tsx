@@ -22,15 +22,21 @@ function InformeColeccion() {
             const obtener = await fetch("http://localhost:3030/getItems");
             const data = await obtener.json();
 
-            // La API devuelve un array o data.data → aseguramos
+            let items: ItemType[] = [];
+
             if (Array.isArray(data)) {
-                setTableData(data);
+                items = data;
             } else if (Array.isArray(data.data)) {
-                setTableData(data.data);
+                items = data.data;
             } else {
                 console.error("La API no devolvió un array");
-                setTableData([]);
             }
+
+            setTableData(items);
+            // Calculamos el total justo cuando llegan los datos
+            const total = items.reduce((acc, item) => acc + (Number(item.precio) || 0), 0);
+            setPrecioTotal(total);
+
         } catch (err) {
             console.error("Error obteniendo items:", err);
         }
@@ -56,9 +62,13 @@ function InformeColeccion() {
     // ---------------------------------------------------
     // SUMATORIA DE PRECIOS
     // ---------------------------------------------------
-    const calcularPrecioTotal = (items: ItemType[]) => {
-        return items.reduce((total, item) => total + (item.precio || 0), 0);
-    };
+    const [precioTotal, setPrecioTotal] = useState(0);
+
+    useEffect(() => {
+        const total = tableData.reduce((acc, item) => acc + (Number(item.precio) || 0), 0);
+        setPrecioTotal(total);
+    }, [tableData]);
+
 
     // ---------------------------------------------------
     // FILA DEL TOTAL ADICIONAL
@@ -67,7 +77,7 @@ function InformeColeccion() {
         nombre: "TOTAL",
         marca: "",
         tipo: "",
-        precio: calcularPrecioTotal(tableData),
+        precio: precioTotal,
     };
 
     // ---------------------------------------------------
@@ -106,7 +116,7 @@ function InformeColeccion() {
 
             <div style={{ padding: "10px", textAlign: "right", fontSize: "18px" }}>
                 <strong>
-                    Precio Total: {calcularPrecioTotal(tableData).toFixed(2)} €
+                    Precio Total: {precioTotal.toFixed(2)} €
                 </strong>
             </div>
         </div>

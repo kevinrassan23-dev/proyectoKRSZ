@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Box, Paper, TextField, Button, Typography, Container, CssBaseline, ThemeProvider } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Box, Paper, TextField, Button, Typography, Container, CssBaseline, ThemeProvider, Tooltip } from '@mui/material';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import { customTheme } from '../Theme';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -122,13 +122,13 @@ return (
             color: 'primary.main',
             }}
         >
-            Bienvenido/a mi App
+            Acceso al Sistema - Electra Management
         </Typography>
 
-        <FavoriteIcon
+        <OfflineBoltIcon
             sx={{
             fontSize: 40,
-            color: 'secondary.main',
+            color: '#FFDE21',
             mb: 2,
             }}
         />
@@ -143,7 +143,6 @@ return (
             label="Usuario"
             name="username"
             autoComplete="username"
-            autoFocus
             value={data.username}
             onChange={Datos}
             sx={{
@@ -182,21 +181,23 @@ return (
             />
 
             {/* Botón para acceder */}
-            <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-                mt: 1,
-                py: 1.5,
-                backgroundColor: 'primary.main',
-                '&:hover': { backgroundColor: 'primary.main', opacity: 0.9 },
-                fontWeight: 'bold',
-                fontSize: '1rem',
-            }}
-            >
-            Acceder
-            </Button>
+            <Tooltip title="Acceder al sistema" placement="top" arrow>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                        mt: 1,
+                        py: 1.5,
+                        backgroundColor: 'primary.main',
+                        '&:hover': { backgroundColor: 'primary.main', opacity: 0.9 },
+                        fontWeight: 'bold',
+                        fontSize: '1rem',
+                    }}
+                >
+                    Acceder
+                </Button>
+            </Tooltip>
         </Box>
         </Paper>
     </Container>
